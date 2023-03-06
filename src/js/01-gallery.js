@@ -23,3 +23,21 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
 });
 
+// // Add imports above this line
+// import { galleryItems } from './gallery-items';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
+// import templateGallery from '../templates/template-gallery.hbs';
+// // Change code below this line
+
+// const galleryMarkUp = document.querySelector('.gallery');
+
+// const addGalleryContainer = galleryItems.map(templateGallery).join('');
+
+// galleryMarkUp.insertAdjacentHTML('beforeend', addGalleryContainer);
+
+// const lightbox = new SimpleLightbox('.gallery a', {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+//   captionPosition: 'bottom',
+// });
