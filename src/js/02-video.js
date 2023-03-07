@@ -6,7 +6,11 @@ const player = new Player(iframe);
 const TIME_KEY = 'videoplayer-current-time';
 
 const onPlay = function (data) {
+  console.log(data);
   localStorage.setItem(TIME_KEY, data.seconds);
+  if (data.percent === 1) {
+    localStorage.removeItem(TIME_KEY);
+  }
 };
 player.on('timeupdate', throttle(onPlay, 1000));
 
@@ -16,13 +20,9 @@ player.on('pause', function () {
   });
 });
 
-
 const videoTime = localStorage.getItem(TIME_KEY);
 
 if (videoTime) {
   player.setCurrentTime(videoTime);
 }
 
-player.on('ended', function () {
-  localStorage.removeItem(TIME_KEY);
-});
