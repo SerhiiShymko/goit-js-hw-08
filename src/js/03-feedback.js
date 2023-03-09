@@ -8,75 +8,30 @@ const refs = {
 };
 const formData = {};
 
-refs.form.addEventListener('submit', onFormSubmit);
-refs.textarea.addEventListener('input', throttle(onTextareaInput, 1000));
-
 populateTextarea();
 
-function onFormSubmit(evt) {
+refs.form.addEventListener('input', throttle(onTextareaInput, 500));
+
+refs.form.addEventListener('submit', evt => {
   evt.preventDefault();
   evt.target.reset();
-  const objData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  const objectValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  console.log(objectValue);
   localStorage.removeItem(STORAGE_KEY);
-
-  if (email.value === '' || message.value === '') {
-    return alert(`Будь ласка, заповніть всі обов'язкові поля.`);
-}
+});
 
 function onTextareaInput(evt) {
   formData[evt.target.name] = evt.target.value;
-  const stringifiedData = JSON.stringify(formData);
-  localStorage.setItem(STORAGE_KEY, stringifiedData);
+  const stringData = JSON.stringify(formData);
+  localStorage.setItem(STORAGE_KEY, stringData);
 }
 
 function populateTextarea() {
   const savedMessage = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  if (savedMessage) {
-    refs.textarea.value = savedMessage['message'] || '';
-    refs.input.value = savedMessage['email'] || '';
+  if (savedMessage === null) {
+    return;
   }
+  refs.textarea.value = savedMessage['message'] || '';
+  refs.input.value = savedMessage['email'] || '';
 }
-// localStorage.setItem(
-//   '.feedback-form',
-//   JSON.stringify({ name: 'mango', age: 2 })
-// );
-// console.log(localStorage);
-// const savedData = localStorage.getItem('.feedback-form');
-// console.log('savedData:', savedData);
-// const parsedData = JSON.parse(savedData);
-// console.log('parsedData:', parsedData);
-
-// const handleSuccess = () => {
-//   document.querySelector('form');
-//   document
-//     .querySelector('.login-form')
-//     .insertAdjacentHTML('afterend', '<h2>Вхід успішний</h2>');
-// };
-
-// const handleError = () => {
-//   const errorText = document.createElement('p');
-//   errorText.style.color = 'red';
-//   errorText.textContent = alert('Всі поля повинні бути заповнені');
-//     document.querySelector('.login-form').append(errorText);
-// };
-
-// const handleSubmit = event => {
-//   event.preventDefault();
-//   const {
-//     elements: { email, message },
-//   } = event.currentTarget;
-//   if (email.value === '' || message.value === '') {
-//     handleError();
-
-//     return;
-//   }
-//   handleSuccess();
-
-//     const userData = { email: email.value, message: message.value };
-//     console.log(userData);
-
-//   event.currentTarget.reset();
-// };
-
-// form.addEventListener('submit', handleSubmit);
