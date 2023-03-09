@@ -8,30 +8,22 @@ const refs = {
 };
 const formData = {};
 
-populateTextarea();
-
 refs.form.addEventListener('input', throttle(onTextareaInput, 500));
+refs.form.addEventListener('submit', onFormSubmit);
 
-refs.form.addEventListener('submit', evt => {
+function onFormSubmit(evt) {
   evt.preventDefault();
   evt.target.reset();
   const objectValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
   console.log(objectValue);
   localStorage.removeItem(STORAGE_KEY);
-});
 
+  if (objectValue === null) {
+    return alert(`Будь ласка, заповніть всі обов'язкові поля.`);
+  }
+}
 function onTextareaInput(evt) {
   formData[evt.target.name] = evt.target.value;
   const stringData = JSON.stringify(formData);
   localStorage.setItem(STORAGE_KEY, stringData);
-}
-
-function populateTextarea() {
-  const savedMessage = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-  if (savedMessage === null) {
-    return;
-  }
-  refs.textarea.value = savedMessage['message'] || '';
-  refs.input.value = savedMessage['email'] || '';
 }
